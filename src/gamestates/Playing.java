@@ -11,6 +11,7 @@ import levels.LevelManager;
 import main.Game;
 import ui.PauseOverLay;
 import utilz.LoadSave;
+import static utilz.constants.Environment.*;
 
 public class Playing extends State implements Statemethods{
     private Player player;
@@ -25,13 +26,15 @@ public class Playing extends State implements Statemethods{
     private int maxTIlesOffset = lvlTilesWide - Game.TILES_INT_WIDTH;
     private int maxLvlOffsetX = maxTIlesOffset * Game.TILES_SIZE;
 
-    private BufferedImage playingBG;
+    private BufferedImage playingBG, bigClouds, smallCLouds;
     
     public Playing(Game game) {
         super(game);
         initClasses();
 
         playingBG = LoadSave.GetSpriteAtLast(LoadSave.PLAYING_BG);
+        bigClouds = LoadSave.GetSpriteAtLast(LoadSave.BIG_CLOUDS);
+        smallCLouds = LoadSave.GetSpriteAtLast(LoadSave.SMALL_CLOUDS);
     }
 
     private void initClasses() {
@@ -72,6 +75,8 @@ public class Playing extends State implements Statemethods{
     @Override
     public void draw(Graphics g) {
         g.drawImage(playingBG, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT,null);
+
+        drawClouds(g);
         
         levelManager.draw(g,xlvlOffset);
         player.render(g,xlvlOffset);
@@ -79,6 +84,12 @@ public class Playing extends State implements Statemethods{
            g.setColor(new Color(0,0,0,155));
            g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
            pauseOverLay.draw(g);
+        }
+    }
+
+    private void drawClouds(Graphics g) {
+        for(int i = 0; i < 3; i++) {
+            g.drawImage(bigClouds, 0 + i * BIG_CLOUD_WIDTH, (int) (204 * Game.SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
         }
     }
 

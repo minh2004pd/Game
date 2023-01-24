@@ -22,6 +22,8 @@ public class LoadSave {
     public static final String SOUND_BUTTONS = "res/sound_button.png";
     public static final String URM_BUTTONS = "res/urm_buttons.png";
     public static final String PLAYING_BG = "res/playing_bg_img.png";
+    public static final String SMALL_CLOUDS = "res/small_clouds.png";
+    public static final String BIG_CLOUDS = "res/big_clouds.png";
     
     public static BufferedImage GetSpriteAtLast(String fileName) {
         BufferedImage img = null;
