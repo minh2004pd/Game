@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "App",
+            "projectName": "PlatformerTurtorial_5d9c4f12"
+        },
+        {
+            "type": "java",
             "name": "Launch MainClass",
             "request": "launch",
             "mainClass": "main.MainClass",

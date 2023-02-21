@@ -4,8 +4,13 @@ import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import static utilz.constants.EnemyConstant.*;
 
 import javax.imageio.ImageIO;
+
+import entities.Carbby;
+import main.Game;
 
 
 public class LoadSave {
@@ -24,6 +29,7 @@ public class LoadSave {
     public static final String PLAYING_BG = "res/playing_bg_img.png";
     public static final String SMALL_CLOUDS = "res/small_clouds.png";
     public static final String BIG_CLOUDS = "res/big_clouds.png";
+    public static final String CARBBY_SPRITES = "res/crabby_sprite.png";
     
     public static BufferedImage GetSpriteAtLast(String fileName) {
         BufferedImage img = null;
@@ -37,6 +43,19 @@ public class LoadSave {
             e.printStackTrace();
         }
         return img;
+    }
+
+    public static ArrayList<Carbby> GetCrabs() {
+        BufferedImage img = GetSpriteAtLast(LEVEL_ONE_DATA);
+        ArrayList<Carbby> list = new ArrayList<>();
+        for(int i=0; i < img.getHeight(); i++)
+           for(int j=0; j < img.getWidth(); j++) {
+               Color color = new Color(img.getRGB(j, i));
+               int value = color.getGreen();
+               if (value == CRABBY)
+                   list.add(new Carbby(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+           }
+        return list;
     }
 
     public static int[][] GetLevelData(){
