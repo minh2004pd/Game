@@ -36,7 +36,7 @@ public class EnemyManager {
 
     private void drawCrabs(Graphics g, int xlvlOffset) {
         for(Carbby c : carbbies) 
-            g.drawImage(carbbyArray[c.getEnemyState()][c.getAniIndex()], (int)(c.getHitbox().x) - xlvlOffset, (int)(c.getHitbox().y), CARABBY_WIDTH, CARABBY_HEIGHT, null);
+            g.drawImage(carbbyArray[c.getEnemyState()][c.getAniIndex()], (int)(c.getHitbox().x) - xlvlOffset - CRABBY_DRAWOFFSET_X, (int)(c.getHitbox().y) - CRABBY_DRAWOFFSET_Y, CARABBY_WIDTH, CARABBY_HEIGHT, null);
     }
 
     private void loadEnemyImgs() {
