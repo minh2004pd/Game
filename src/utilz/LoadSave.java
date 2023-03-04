@@ -2,10 +2,14 @@ package utilz;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import static utilz.constants.EnemyConstant.*;
+
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -31,6 +35,7 @@ public class LoadSave {
     public static final String BIG_CLOUDS = "res/big_clouds.png";
     public static final String CARBBY_SPRITES = "res/crabby_sprite.png";
     public static final String STATUS_BAR = "res/health_power_bar.png";
+    public static final String COMPLETED_IMG = "res/completed_sprite.png";
     
     public static BufferedImage GetSpriteAtLast(String fileName) {
         BufferedImage img = null;
@@ -46,33 +51,42 @@ public class LoadSave {
         return img;
     }
 
-    public static ArrayList<Carbby> GetCrabs() {
-        BufferedImage img = GetSpriteAtLast(LEVEL_ONE_DATA);
-        ArrayList<Carbby> list = new ArrayList<>();
-        for(int i=0; i < img.getHeight(); i++)
-           for(int j=0; j < img.getWidth(); j++) {
-               Color color = new Color(img.getRGB(j, i));
-               int value = color.getGreen();
-               if (value == CRABBY)
-                   list.add(new Carbby(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
-           }
-        return list;
-    }
+    public static BufferedImage[] GetAllLevels() {
+        URL url = LoadSave.class.getResource("/res/levels");
+        File file = null;
 
-    public static int[][] GetLevelData(){
-        BufferedImage img = GetSpriteAtLast(LEVEL_ONE_DATA);
-        int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-        for(int i=0; i < img.getHeight(); i++)
-           for(int j=0; j < img.getWidth(); j++) {
-               Color color = new Color(img.getRGB(j, i));
-               int value = color.getRed();
-               if (value >= 48)
-                   value = 0;
-               lvlData[i][j] = value;
-           }
-        return lvlData;
+        File[] files = file.listFiles();
+        File[] fileSorted = new File[files.length];
 
+        for(int i=0; i<files.length; i++)
+            for(int j=0; j<files.length; j++) {
+                if(files[j].getName().equals((i+1) + ".png"))
+                   fileSorted[i] = files[j];
+            }
+
+        // for(File f : files)
+        //     System.out.println("file: " + f.getName());
+        // for(File f : fileSorted)
+        // System.out.println("file: " + f.getName());
+        BufferedImage[] imgs = new BufferedImage[fileSorted.length];
+
+        for(int i=0; i<imgs.length; i++) {
+            try {
+                imgs[i] = ImageIO.read(fileSorted[i]);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return imgs;
     }
 
 }

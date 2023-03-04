@@ -1,6 +1,13 @@
 package utilz;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import static utilz.constants.EnemyConstant.*;
+
+import entities.Carbby;
+
+import java.awt.Color;
 
 import main.Game;
 
@@ -101,4 +108,31 @@ public class HelpMethods {
         return IsAllTileWalkable(playerXTile, enemyXTile, lvlData, yTile);
         
    }
+
+   public static int[][] GetLevelData(BufferedImage img){
+      int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+
+      for(int i=0; i < img.getHeight(); i++)
+         for(int j=0; j < img.getWidth(); j++) {
+             Color color = new Color(img.getRGB(j, i));
+             int value = color.getRed();
+             if (value >= 48)
+                 value = 0;
+             lvlData[i][j] = value;
+         }
+      return lvlData;
+
+  }
+
+  public static ArrayList<Carbby> GetCrabs(BufferedImage img) {
+   ArrayList<Carbby> list = new ArrayList<>();
+   for(int i=0; i < img.getHeight(); i++)
+      for(int j=0; j < img.getWidth(); j++) {
+          Color color = new Color(img.getRGB(j, i));
+          int value = color.getGreen();
+          if (value == CRABBY)
+              list.add(new Carbby(j * Game.TILES_SIZE, i * Game.TILES_SIZE));
+      }
+   return list;
+}
 }

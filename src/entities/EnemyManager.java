@@ -1,6 +1,7 @@
 package entities;
 
 import gamestates.Playing;
+import level.Level;
 import utilz.LoadSave;
 
 import java.awt.image.BufferedImage;
@@ -19,11 +20,10 @@ public class EnemyManager {
     public EnemyManager(Playing playing) {
         this.playing = playing;
         loadEnemyImgs();
-        addEnemies();
     }
 
-    private void addEnemies() {
-        carbbies = LoadSave.GetCrabs();
+    public void loadEnemies(Level level) {
+        carbbies = level.getCrabs();
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -37,12 +37,18 @@ public class EnemyManager {
     }
 
     private void drawCrabs(Graphics g, int xlvlOffset) {
+        boolean checkEnemy = false;
         for(Carbby c : carbbies) {
             if(c.isActive()) {
                 g.drawImage(carbbyArray[c.getEnemyState()][c.getAniIndex()], (int)(c.getHitbox().x) - xlvlOffset - CRABBY_DRAWOFFSET_X + c.flipX(), (int)(c.getHitbox().y) - CRABBY_DRAWOFFSET_Y,
                 CARABBY_WIDTH*c.flipWidth(), CARABBY_HEIGHT, null);
                 //c.drawAttackBox(g,xlvlOffset);
+                checkEnemy = true;
             }
+        }
+
+        if(!checkEnemy) {
+            playing.setGameComplete(true);
         }
     }
 
