@@ -36,6 +36,8 @@ public class LoadSave {
     public static final String CARBBY_SPRITES = "res/crabby_sprite.png";
     public static final String STATUS_BAR = "res/health_power_bar.png";
     public static final String COMPLETED_IMG = "res/completed_sprite.png";
+    public static final String POTION_IMG = "/res/potions_sprites";
+    public static final String OBJECTS_IMG = "/res/objects_sprites";
     
     public static BufferedImage GetSpriteAtLast(String fileName) {
         BufferedImage img = null;
@@ -52,7 +54,7 @@ public class LoadSave {
     }
 
     public static BufferedImage[] GetAllLevels() {
-        URL url = LoadSave.class.getResource("/res/levels");
+        URL url = LoadSave.class.getResource("/res/allLevel");
         File file = null;
 
         try {
@@ -71,8 +73,8 @@ public class LoadSave {
                    fileSorted[i] = files[j];
             }
 
-        // for(File f : files)
-        //     System.out.println("file: " + f.getName());
+        for(File f : files)
+            System.out.println("file: " + f.getName());
         // for(File f : fileSorted)
         // System.out.println("file: " + f.getName());
         BufferedImage[] imgs = new BufferedImage[fileSorted.length];

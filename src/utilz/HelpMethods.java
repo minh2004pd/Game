@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import static utilz.constants.EnemyConstant.*;
+import java.awt.Point;
 
 import entities.Carbby;
 
@@ -135,4 +136,14 @@ public class HelpMethods {
       }
    return list;
 }
+   public static Point GetPlayerSpawn(BufferedImage img) {
+      for(int i=0; i < img.getHeight(); i++)
+      for(int j=0; j < img.getWidth(); j++) {
+          Color color = new Color(img.getRGB(j, i));
+          int value = color.getGreen();
+          if (value == 100)
+              return new Point(i * Game.TILES_SIZE, j * Game.TILES_SIZE);
+      }
+      return new Point(1 * Game.TILES_SIZE, 1 * Game.TILES_SIZE);
+   }
 }

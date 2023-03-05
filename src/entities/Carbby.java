@@ -13,12 +13,11 @@ import main.Game;
 public class Carbby extends Enemy {
 
     //AttackBox
-    private Rectangle2D.Float attackBox;
     private int attackBoxSetX;
 
     public Carbby(float x, float y) {
         super(x, y, CARABBY_WIDTH, CARABBY_HEIGHT, CRABBY);
-        initHitbox(x, y, (int)(22 * Game.SCALE), (int)(19 * Game.SCALE));
+        initHitbox(22, 19);
         initAttackBox();
     }
 
@@ -38,11 +37,6 @@ public class Carbby extends Enemy {
         attackBox.y = hitbox.y;
     }
 
-    public void drawAttackBox(Graphics g, int lvlOffset) {
-        g.setColor(Color.red);
-        g.drawRect((int)(attackBox.x - lvlOffset),(int)(attackBox.y),(int)(attackBox.width),(int)(attackBox.height));
-    }
-
     private void updateBehavior(int[][] lvlData, Player player) {
         if(firstUpdate) {
             firstUpdateCheck(lvlData);
@@ -52,7 +46,7 @@ public class Carbby extends Enemy {
             inAirCheck(lvlData);
         }
         else {
-            switch(enemyState) {
+            switch(state) {
                 case IDLE:
                     changeState(RUNNING);
                     break;

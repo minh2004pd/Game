@@ -1,6 +1,7 @@
 package level;
 
 import java.awt.image.BufferedImage;
+import java.awt.Point;
 import java.util.ArrayList;
 import static utilz.HelpMethods.*;
 
@@ -14,14 +15,20 @@ public class Level {
     private int lvlTilesWide;
     private int maxTIlesOffset;
     private int maxLvlOffsetX ;
+    private Point playerSpawn;
 
     public Level(BufferedImage img) {
         this.img = img;
         createLevelData();
         createEnemies();
         calcLvlOffsets();
+        calcPlayerSpawn();
     }
     
+    private void calcPlayerSpawn() {
+        playerSpawn = GetPlayerSpawn(img);
+    }
+
     private void calcLvlOffsets() {
         lvlTilesWide = img.getWidth();
         maxTIlesOffset = lvlTilesWide - Game.TILES_INT_WIDTH;
@@ -49,6 +56,10 @@ public class Level {
 
     public ArrayList<Carbby> getCrabs() {
         return crabs;
+    }
+
+    public Point getPlayerSpawn() {
+        return playerSpawn;
     }
     
 }
